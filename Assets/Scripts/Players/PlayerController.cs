@@ -1,27 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(EntityAnimator))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     
     private Rigidbody2D _rb2d;
     private SpriteRenderer _spriteRenderer;
-    private Animator _animator;
-    
-    private Vector2 _direction;
-    private int _lastXDirection = 1;
-    
+    private EntityAnimator _entityAnimator;
+
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _animator = GetComponent<Animator>();
+        _entityAnimator = GetComponent<EntityAnimator>();
     }
 
     #region Update
@@ -35,7 +30,9 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Movement
-
+    
+    private Vector2 _direction;
+    private int _lastXDirection = 1;
     private void UpdateMovement()
     {
         _direction = PlayerInput.GetMoveDirection().normalized;
@@ -43,11 +40,11 @@ public class PlayerController : MonoBehaviour
 
         if (_direction.x == 0.0f)
         {
-            PlayAnimation("Idle");
+            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Idle);
         }
         else
         {
-            PlayAnimation("Move");
+            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Move);
             _lastXDirection = Math.Sign(_direction.x);
         }
         _spriteRenderer.flipX = _lastXDirection < 0;
@@ -56,48 +53,24 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Attack
-
-    private bool _isAttacking = false;
     private void UpdateAttack()
     {
         if (PlayerInput.GetAttackPrimary())
         {
-            StartAttack();
+            TryAttack();
         }
     }
 
-    private void StartAttack()
+    private void TryAttack()
     {
-        if (_isAttacking)
+        if (_entityAnimator.IsAttackInProgress())
         {
             return;
         }
-        print("Starting");
-        PlayAnimation("Headbutt");
-        _isAttacking = true;
-    }
-
-    public void FinishAttack()
-    {
-        _isAttacking = false;
-        
-        print("Finished");
+        _entityAnimator.PlayAttackAnimation("Headbutt");
     }
 
     #endregion
     
-    #region Animator
-
-    private string _currentAnimation;
-    private void PlayAnimation(string animationName)
-    {
-        if (animationName == _currentAnimation || _isAttacking) return;
-        
-        _animator.Play(animationName);
-
-        _currentAnimation = animationName;
-    }
-
-    #endregion
 
 }

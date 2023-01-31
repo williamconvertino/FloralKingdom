@@ -1,8 +1,9 @@
 using UnityEngine;
 
-
 public static class PlayerInput
 {
+    #region Move Direction
+
     public static Vector2 GetMoveDirection()
     {
         return new Vector2(GetMoveDirHorizontal(), GetMoveDirVertical());
@@ -36,9 +37,15 @@ public static class PlayerInput
         return moveDir;
     }
 
+
+    #endregion
+
+    #region Attacks
+
     public static bool GetAttackPrimary()
     {
         return Input.GetKey(KeyCode.Space);
     }
-    
+
+    #endregion
 }
