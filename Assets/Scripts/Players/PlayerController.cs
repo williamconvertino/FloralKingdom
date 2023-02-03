@@ -63,10 +63,8 @@ public class PlayerController : MonoBehaviour
 
     private void TryAttack()
     {
-        if (_entityAnimator.IsAttackInProgress())
-        {
-            return;
-        }
+        if (_entityAnimator.IsAttacking()) return;
+            
         _entityAnimator.PlayAttackAnimation("Headbutt");
     }
 
