@@ -10,6 +10,7 @@ public class PlayerNetworkSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
 
     [SerializeField] private GameObject networkPlayerPrefab;
+    [SerializeField] private NetworkInputHandler networkInputHandler;
     
     private Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
 
@@ -32,7 +33,17 @@ public class PlayerNetworkSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        
+        if (networkInputHandler == null && NetworkPlayer.Local != null)
+        {
+            networkInputHandler = NetworkPlayer.Local.GetComponent<NetworkInputHandler>();
+        }
+
+        if (networkInputHandler == null)
+        {
+            Debug.LogError("Error: No local player");
+            return;
+        }
+        input.Set(networkInputHandler.GetNetworkInputData());
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)

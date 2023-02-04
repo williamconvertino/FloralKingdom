@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         _direction = PlayerInput.GetMoveDirection().normalized;
         _rb2d.velocity = _direction * speed;
 
-        if (_direction.x == 0.0f)
+        if (_direction.magnitude == 0.0f)
         {
             _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Idle);
         }
