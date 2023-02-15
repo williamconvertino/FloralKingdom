@@ -12,11 +12,12 @@ public class NetworkPlayerMovement : NetworkBehaviour
         _networkPlayerController = GetComponent<NetworkPlayerController>();
     }
 
-    public void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData networkInputData))
         {
-            
+            _networkPlayerController.Move(networkInputData.MoveDirection);
+            _networkPlayerController.Attack(networkInputData.Attack1);
         }
     }
 }

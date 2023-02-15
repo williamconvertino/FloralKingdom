@@ -76,6 +76,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6801296246769106246, guid: 4e7d5d39c2164f44c80cd69b205cb2e8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6918597321798696219}
+    - targetCorrespondingSourceObject: {fileID: 6801296246769106246, guid: 4e7d5d39c2164f44c80cd69b205cb2e8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2138222734845196396}
   m_SourcePrefab: {fileID: 100100000, guid: 4e7d5d39c2164f44c80cd69b205cb2e8, type: 3}
 --- !u!1 &3174791371178126717 stripped
 GameObject:
@@ -149,6 +152,7 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   UseLegacySharedModeInterpolation: 0
   TargetInterpolationDelay: 0.03
+  speed: 4
 --- !u!114 &6918597321798696219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,3 +166,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+--- !u!114 &2138222734845196396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3174791371178126717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c53f0795c254adb9d5a287646d2a618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
