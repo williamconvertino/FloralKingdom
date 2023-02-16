@@ -4,46 +4,62 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
-public class PlayerNetworkSpawner : MonoBehaviour, INetworkRunnerCallbacks
+public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
 {
-
-    [SerializeField] private GameObject networkPlayerPrefab;
-    [SerializeField] private NetworkInputHandler networkInputHandler;
     
-    private Dictionary<PlayerRef, NetworkObject> _playerMap = new Dictionary<PlayerRef, NetworkObject>();
+    #region Start Game
+    
+    [SerializeField] private bool showGUI;
+
+    private NetworkRunner _networkRunner;
+    
+    private async void StartGame(GameMode mode)
+    {
+        _networkRunner = gameObject.AddComponent<NetworkRunner>();
+        _networkRunner.ProvideInput = true;
+
+        await _networkRunner.StartGame(new StartGameArgs()
+        {
+            GameMode = mode,
+            SessionName = "Test Session",
+            Scene = SceneManager.GetActiveScene().buildIndex,
+            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>()
+        });
+    }
+
+    private void OnGUI()
+    {
+        if (!showGUI || _networkRunner != null) return;
+        
+        if (GUI.Button(new Rect(0,0,200,40), "Host")) StartGame(GameMode.Host);
+        if (GUI.Button(new Rect(0,50,200,40), "Client")) StartGame(GameMode.Client);
+        
+    }
+
+    #endregion
+
+    #region Player Join and Leave
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (!runner.IsServer) return;
-        Vector3 randomPos = new Vector3(Random.Range(-5,5), Random.Range(-5,5));
-        NetworkObject playerObject = runner.Spawn(networkPlayerPrefab, randomPos, Quaternion.identity, player);
-        _playerMap.Add(player, playerObject);
+        
+        NetworkPlayerSpawner.Instance.SpawnPlayer(runner, player);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        if (_playerMap.TryGetValue(player, out NetworkObject playerObject))
-        {
-            _playerMap.Remove(player);
-            runner.Despawn(playerObject);
-        }
+        if (!runner.IsServer) return;
+        
+        NetworkPlayerSpawner.Instance.DespawnPlayer(runner, player);
     }
 
+    #endregion
+    
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        if (networkInputHandler == null && NetworkPlayer.Local != null)
-        {
-            networkInputHandler = NetworkPlayer.Local.GetComponent<NetworkInputHandler>();
-        }
-
-        if (networkInputHandler == null)
-        {
-            Debug.LogError("Error: No local player");
-            return;
-        }
-        input.Set(networkInputHandler.GetNetworkInputData());
+        
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -110,4 +126,5 @@ public class PlayerNetworkSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         
     }
+
 }
