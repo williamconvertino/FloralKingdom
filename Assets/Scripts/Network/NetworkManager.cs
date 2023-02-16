@@ -59,7 +59,7 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        
+        NetworkInputManager.Instance.OnInput(runner, input);
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
