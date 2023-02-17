@@ -40,6 +40,6 @@ public class NetworkInputManager : MonoBehaviour
 
     private bool GetAttack()
     {
-        return Input.GetKeyDown(KeyCode.Space);
+        return Input.GetKey(KeyCode.Space);
     }
 }

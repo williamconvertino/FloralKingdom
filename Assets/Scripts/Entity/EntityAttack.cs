@@ -15,11 +15,8 @@ public class EntityAttack : MonoBehaviour
 
     private void Update()
     {
-        if (_attack && !_animator.IsAttacking())
-        {
-            _animator.PlayAttackAnimation("Headbutt");
-            _attack = false;
-        }
+        if (_attack && !_animator.IsAttacking()) _animator.PlayAttackAnimation("Headbutt");
+        _attack = false;
     }
 
     public void Attack()
