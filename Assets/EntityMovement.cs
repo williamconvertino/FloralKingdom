@@ -23,7 +23,7 @@ public class EntityMovement : MonoBehaviour
     public Vector2 Direction { set; get; }
     private void Update()
     {
-        _rb2d.velocity = Direction * speed;
+        _rb2d.velocity = Direction.normalized * speed;
     }
 
     #endregion

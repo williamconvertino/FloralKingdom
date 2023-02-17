@@ -206,6 +206,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5872038296765901896}
+  - {fileID: 1724858542779026094}
   SimulationBehaviours: []
 --- !u!50 &7063664444440406674
 Rigidbody2D:
@@ -246,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11d9750fded1434b827daf5113dc4d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  _interpolationDataSource: 0
 --- !u!114 &2516147358431135152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,3 +260,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53fb44fbb86dad840956eafd2492e0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 4
