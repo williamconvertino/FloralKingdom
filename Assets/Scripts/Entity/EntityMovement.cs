@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EntityMovement : MonoBehaviour
+public class EntityMovement : NetworkBehaviour
 {
     #region Initialization
     
@@ -18,6 +19,17 @@ public class EntityMovement : MonoBehaviour
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
+    #endregion
+
+    #region FlipX
+
+    [Networked(OnChanged = nameof(OnChangeFlipX))] public bool FlipX { set; get; }
+
+    public static void OnChangeFlipX(Changed<EntityMovement> entityMovement)
+    {
+        entityMovement.Behaviour.FlipX = true;
+    }
+    
     #endregion
     
     #region Movement

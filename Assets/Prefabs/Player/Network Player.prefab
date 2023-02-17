@@ -208,6 +208,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 5872038296765901896}
   - {fileID: 1724858542779026094}
+  - {fileID: 2516147358431135152}
   SimulationBehaviours: []
 --- !u!50 &7063664444440406674
 Rigidbody2D:
@@ -261,6 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53fb44fbb86dad840956eafd2492e0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   speed: 4
 --- !u!114 &4440888087107252516
 MonoBehaviour:
