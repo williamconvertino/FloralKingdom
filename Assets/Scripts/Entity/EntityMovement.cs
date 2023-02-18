@@ -4,7 +4,7 @@ using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EntityMovement : NetworkBehaviour
+public class EntityMovement : MonoBehaviour
 {
     #region Initialization
     
@@ -34,24 +34,36 @@ public class EntityMovement : NetworkBehaviour
         
         if (Direction.magnitude == 0)
         {
-            _animator.PlayAnimation(EntityAnimator.AnimationState.Idle);
+            UpdateAnimation(EntityAnimator.AnimationState.Idle);
         }
         else
         {
-            _animator.PlayAnimation(EntityAnimator.AnimationState.Move);
+            UpdateAnimation(EntityAnimator.AnimationState.Move);
         }
     }
 
     #endregion
 
-    #region Sprite Direction
+    #region UpdateSpriteDirection
 
-    protected bool FlipX;
-    protected virtual void UpdateSpriteDirection()
+    public bool FreezeSpriteDirection { set; get; }
+    private bool _flipX;
+    
+    protected void UpdateSpriteDirection()
     {
-        if (Direction.x > 0) FlipX = false;
-        if (Direction.x < 0) FlipX = true;
-        _spriteRenderer.flipX = FlipX;
+        if (FreezeSpriteDirection) return;
+        if (Direction.x > 0) _flipX = false;
+        if (Direction.x < 0) _flipX = true;
+        _spriteRenderer.flipX = _flipX;
+    }
+
+    #endregion
+
+    #region UpdateAnimation
+
+    protected virtual void UpdateAnimation(EntityAnimator.AnimationState animationState)
+    {
+        _animator.PlayAnimation(animationState);
     }
 
     #endregion

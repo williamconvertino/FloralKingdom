@@ -2,9 +2,12 @@ using System;
 using Fusion;
 using UnityEngine;
 
-
+[RequireComponent(typeof(EntityMovement))]
+[RequireComponent(typeof(EntityAttack))]
 public class NetworkPlayerController : NetworkBehaviour
 {
+    #region Initialization
+
     private EntityMovement _movement;
     private EntityAttack _attack;
 
@@ -14,6 +17,8 @@ public class NetworkPlayerController : NetworkBehaviour
         _attack = GetComponent<EntityAttack>();
     }
 
+    #endregion
+    
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData inputData))

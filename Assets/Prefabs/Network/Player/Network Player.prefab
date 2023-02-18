@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5796077464316296165}
   - component: {fileID: 5796077464316296187}
   - component: {fileID: 5796077464316296184}
-  - component: {fileID: 2497161952692041374}
+  - component: {fileID: 3876769153452959028}
   m_Layer: 0
   m_Name: Entity Model
   m_TagString: Untagged
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a746037df06b43dc816672e6caed4845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2497161952692041374
+--- !u!114 &3876769153452959028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5796077464316296166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034bbe7f522706743a6de74e96cd3994, type: 3}
+  m_Script: {fileID: 11500000, guid: fc423456e06969f4f80808d6d1c488f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 1724858542779026094}
   - component: {fileID: 4440888087107252516}
   - component: {fileID: 6107581296519172229}
+  - component: {fileID: 5178032279249358835}
   m_Layer: 0
   m_Name: Network Player
   m_TagString: Untagged
@@ -224,7 +225,7 @@ MonoBehaviour:
   - {fileID: 5872038296765901896}
   - {fileID: 1724858542779026094}
   - {fileID: 6107581296519172229}
-  - {fileID: 2497161952692041374}
+  - {fileID: 3876769153452959028}
   SimulationBehaviours: []
 --- !u!50 &7063664444440406674
 Rigidbody2D:
@@ -291,4 +292,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+--- !u!114 &5178032279249358835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7063664444440406677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53fb44fbb86dad840956eafd2492e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   speed: 4

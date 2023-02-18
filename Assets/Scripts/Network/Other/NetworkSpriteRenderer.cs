@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
@@ -28,14 +25,13 @@ public class NetworkSpriteRenderer : NetworkBehaviour
         changed.LoadOld();
         bool flipXOld = changed.Behaviour.FlipX;
         
-        if (flipXCurrent != flipXOld) changed.Behaviour.OnFlipXRemote(flipXCurrent);
+        if (flipXCurrent != flipXOld) changed.Behaviour.OnFlipX(flipXCurrent);
     }
 
-    public void OnFlipXRemote(bool flipX)
+    public void OnFlipX(bool flipX)
     {
         _spriteRenderer.flipX = flipX;
     }
 
     #endregion
-    
 }
