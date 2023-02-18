@@ -2,7 +2,7 @@ using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class NetworkSpriteRenderer : NetworkBehaviour
+public class EntitySpriteRenderer : NetworkBehaviour
 {
     #region Initialization
 
@@ -17,9 +17,9 @@ public class NetworkSpriteRenderer : NetworkBehaviour
 
     #region FlipX
 
-    [Networked(OnChanged = nameof(OnFlipXChanged))] public bool FlipX { set; get; }
+    [Networked(OnChanged = nameof(OnFlipXChanged))] [HideInInspector] public bool FlipX { set; get; }
 
-    public static void OnFlipXChanged(Changed<NetworkSpriteRenderer> changed)
+    public static void OnFlipXChanged(Changed<EntitySpriteRenderer> changed)
     {
         bool flipXCurrent = changed.Behaviour.FlipX;
         changed.LoadOld();

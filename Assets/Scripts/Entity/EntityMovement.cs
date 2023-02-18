@@ -9,14 +9,14 @@ public class EntityMovement : MonoBehaviour
     #region Initialization
     
     private Rigidbody2D _rb2d;
-    private EntityAnimator _animator;
-    private SpriteRenderer _spriteRenderer;
+    private EntityAnimator _entityAnimator;
+    private EntitySpriteRenderer _entitySpriteRenderer;
         
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
-        _animator = GetComponentInChildren<EntityAnimator>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _entityAnimator = GetComponentInChildren<EntityAnimator>();
+        _entitySpriteRenderer = GetComponentInChildren<EntitySpriteRenderer>();
     }
 
     #endregion
@@ -25,45 +25,25 @@ public class EntityMovement : MonoBehaviour
     
     [SerializeField] private float speed;
     public Vector2 Direction { set; get; }
+    
+    private bool _flipX;
+    
     private void Update()
     {
-        
-        UpdateSpriteDirection();
+        if (Direction.x > 0) _flipX = false;
+        if (Direction.x < 0) _flipX = true;
+        if (_flipX != _entitySpriteRenderer.FlipX) _entitySpriteRenderer.FlipX = _flipX;
         
         _rb2d.velocity = Direction.normalized * speed;
         
         if (Direction.magnitude == 0)
         {
-            UpdateAnimation(EntityAnimator.AnimationState.Idle);
+            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Idle);
         }
         else
         {
-            UpdateAnimation(EntityAnimator.AnimationState.Move);
+            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Move);
         }
-    }
-
-    #endregion
-
-    #region UpdateSpriteDirection
-
-    public bool FreezeSpriteDirection { set; get; }
-    private bool _flipX;
-    
-    protected void UpdateSpriteDirection()
-    {
-        if (FreezeSpriteDirection) return;
-        if (Direction.x > 0) _flipX = false;
-        if (Direction.x < 0) _flipX = true;
-        _spriteRenderer.flipX = _flipX;
-    }
-
-    #endregion
-
-    #region UpdateAnimation
-
-    protected virtual void UpdateAnimation(EntityAnimator.AnimationState animationState)
-    {
-        _animator.PlayAnimation(animationState);
     }
 
     #endregion

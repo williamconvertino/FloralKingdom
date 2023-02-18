@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(EntityMovement))]
 [RequireComponent(typeof(EntityAttack))]
-public class NetworkPlayerController : NetworkBehaviour
+public class PlayerController : NetworkBehaviour
 {
     #region Initialization
 

@@ -6,14 +6,13 @@ public class NetworkEntityMovement : NetworkBehaviour
 {
     #region Initialization
 
-    private NetworkSpriteRenderer _networkSpriteRenderer;
+    private EntitySpriteRenderer _networkSpriteRenderer;
     private EntityMovement _entityMovement;
 
     private void Awake()
     {
-        _networkSpriteRenderer = GetComponentInChildren<NetworkSpriteRenderer>();
+        _networkSpriteRenderer = GetComponentInChildren<EntitySpriteRenderer>();
         _entityMovement = GetComponent<EntityMovement>();
-        _entityMovement.FreezeSpriteDirection = true;
     }
 
     #endregion
