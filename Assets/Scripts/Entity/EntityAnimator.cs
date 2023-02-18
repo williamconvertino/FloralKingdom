@@ -1,23 +1,22 @@
 using System;
+using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class EntityAnimator : MonoBehaviour
+public class EntityAnimator : NetworkBehaviour
 {
-    private Animator _animator;
-
-    #region Init & Update
-
-    private void Start()
-        {
-            _animator = GetComponent<Animator>();
-        }
     
-        private void Update()
-        {
-            UpdateAnimation();
-        }
+    #region Initialization and Update
+    private Animator _animator;
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
+    private void Update()
+    {
+        UpdateAnimation();
+    }
     #endregion
 
     #region Animation State
@@ -29,59 +28,31 @@ public class EntityAnimator : MonoBehaviour
             Move,
             Attack
         }
+    #endregion
+
+    #region Play Animation
     
     private AnimationState _currentAnimationState;
-    private AnimationState _queuedAnimation;
-    private string _queuedAttackName;
+
+    [Networked(OnChanged = nameof(OnQueuedAnimationState))]
+    [HideInInspector]
+    public AnimationState QueuedAnimationState { set; get; } = AnimationState.Idle;
+
+    public static void OnQueuedAnimationState(Changed<EntityAnimator> changed)
+    {
+        changed.Behaviour.PlayAnimation(changed.Behaviour.QueuedAnimationState);
+    }
     
     public void PlayAnimation(AnimationState animationState)
     {
-        _queuedAnimation = animationState;
+        QueuedAnimationState = animationState;
     }
-    
-    public void PlayAttackAnimation(string attackName)
-    {
-        _queuedAnimation = AnimationState.Attack;
-        _queuedAttackName = attackName;
-    }
-    
-    //This system is bad, but having this logic in PlayAnimation causes synchronization issues.
-    private void UpdateAnimation()
-    {
-        if (_isAttacking) return;
 
-        if (_queuedAnimation == AnimationState.Attack)
-        {
-            _isAttacking = true;
-            _currentAnimationState = AnimationState.Attack;
-            _animator.Play(_queuedAttackName);
-            return;
-        }
-
-        if (_currentAnimationState == _queuedAnimation) return;
-
-        _currentAnimationState = _queuedAnimation;
-        _animator.Play(_currentAnimationState.ToString());
-    }
-    public void OnAnimationEnd()
+    public void UpdateAnimation()
     {
-        _queuedAnimation = AnimationState.Idle;
+        _animator.Play(AnimationState.Move.ToString());
     }
-    
+
     #endregion
 
-    #region Attack State
-    private bool _isAttacking;
-    public void OnAttackAnimationEnd()
-        {
-            _isAttacking = false;
-        }
-        
-        public bool IsAttacking()
-        {
-            return _isAttacking;
-        }
-
-    #endregion
-    
 }
