@@ -19,49 +19,49 @@ public class EntityAnimator : NetworkBehaviour
     }
     #endregion
 
-    #region Animation State
-
-    public enum AnimationState
-        {
-            None,
-            Idle,
-            Move,
-            Action
-        }
-    #endregion
+    #region Play Animation
 
     [Networked(OnChanged = nameof(OnQueuedAnimationState))]
     [HideInInspector]
-    public AnimationState NewAnimationState { set; get; }
+    public EntityAnimationState NewAnimationState { set; get; }
 
-    private AnimationState _queuedAnimationState = AnimationState.None;
-    private AnimationState _currentAnimationState = AnimationState.None;
+    private EntityAnimationState _queuedAnimationState = EntityAnimationState.None;
+    private EntityAnimationState _currentAnimationState = EntityAnimationState.None;
     
     public static void OnQueuedAnimationState(Changed<EntityAnimator> changed)
     {
         changed.Behaviour.RunAnimator(changed.Behaviour.NewAnimationState.ToString());
     }
     
-    public void PlayAnimation(AnimationState animationState)
+    public void PlayAnimation(EntityAnimationState animationState)
     {
         _queuedAnimationState = animationState;
     }
 
+    private void LoadAnimationState(EntityAnimationState animationState)
+    {
+        _currentAnimationState = animationState;
+        NewAnimationState = _currentAnimationState;
+    }
+
+    #endregion
+
+    #region Update and Play Animation
     public void UpdateAnimation()
     {
-        if (_currentAnimationState == AnimationState.None && _queuedAnimationState == AnimationState.None)
+        if (_currentAnimationState == EntityAnimationState.None && _queuedAnimationState == EntityAnimationState.None)
         {
-            SetAnimationState(AnimationState.Idle);
+            LoadAnimationState(EntityAnimationState.Idle);
             return;
         }
-        if (_queuedAnimationState == AnimationState.None) return;
+        if (_queuedAnimationState == EntityAnimationState.None) return;
 
         if (_queuedAnimationState != _currentAnimationState)
         {
-            SetAnimationState(_queuedAnimationState);
+            LoadAnimationState(_queuedAnimationState);
         }
 
-        _queuedAnimationState = AnimationState.None;
+        _queuedAnimationState = EntityAnimationState.None;
         
     }
 
@@ -70,11 +70,6 @@ public class EntityAnimator : NetworkBehaviour
         _animator.Play(animationName);
     }
     
-    private void SetAnimationState(AnimationState animationState)
-    {
-        _currentAnimationState = animationState;
-        NewAnimationState = _currentAnimationState;
-    }
-    
+    #endregion
 
 }

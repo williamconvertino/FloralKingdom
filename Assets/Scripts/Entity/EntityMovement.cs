@@ -38,11 +38,11 @@ public class EntityMovement : NetworkBehaviour
 
         if (Direction.magnitude == 0)
         {
-            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Idle);   
+            _entityAnimator.PlayAnimation(EntityAnimationState.Idle);   
         }
         else
         {
-            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Move); 
+            _entityAnimator.PlayAnimation(EntityAnimationState.Move); 
         }
         
     }
