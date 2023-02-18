@@ -4,7 +4,7 @@ using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EntityMovement : NetworkBehaviour
+public class EntityMovement : MonoBehaviour
 {
     #region Initialization
     

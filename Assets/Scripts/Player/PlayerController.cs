@@ -3,18 +3,18 @@ using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(EntityMovement))]
-[RequireComponent(typeof(EntityAttack))]
+[RequireComponent(typeof(EntityAction))]
 public class PlayerController : NetworkBehaviour
 {
     #region Initialization
 
-    private EntityMovement _movement;
-    private EntityAttack _attack;
+    private EntityMovement _entityMovement;
+    private EntityAction _entityAction;
 
     private void Awake()
     {
-        _movement = GetComponent<EntityMovement>();
-        _attack = GetComponent<EntityAttack>();
+        _entityMovement = GetComponent<EntityMovement>();
+        _entityAction = GetComponent<EntityAction>();
     }
 
     #endregion
@@ -23,8 +23,8 @@ public class PlayerController : NetworkBehaviour
     {
         if (GetInput(out NetworkInputData inputData))
         {
-            _movement.Direction = inputData.Direction;
-            if (inputData.Attack) _attack.Attack();
+            _entityMovement.Direction = inputData.Direction;
+            _entityAction.DoAttack = inputData.Attack;
         }
     }
 }

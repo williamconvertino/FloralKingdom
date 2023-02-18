@@ -1,26 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
-public class EntityAttack : MonoBehaviour
+public class EntityAction : MonoBehaviour
 {
-    
+    #region Initialization
     private EntityAnimator _animator;
-    private bool _attack;
     private void Start()
     {
         _animator = GetComponentInChildren<EntityAnimator>();
     }
-
+    #endregion
+    
+    public bool DoAttack { set; get; }
     private void Update()
     {
-        // if (_attack && !_animator.IsAttacking()) _animator.PlayAttackAnimation("Headbutt");
-        // _attack = false;
-    }
-
-    public void Attack()
-    {
-        _attack = true;
+        if (DoAttack) _animator.PlayAnimation(EntityAnimationState.Headbutt);
+        DoAttack = false;
     }
 }
