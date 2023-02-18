@@ -11,8 +11,6 @@ public class EntityAnimator : NetworkBehaviour
     private void Start ()
     {
         _animator = GetComponent<Animator>();
-        AnimationEventDispatcher eventDispatcher = gameObject.AddComponent<AnimationEventDispatcher>();
-        eventDispatcher.OnAnimationComplete.AddListener(e => _currentAnimationState = AnimationState.None);
     }
 
     private void Update()
