@@ -21,27 +21,16 @@ public class EntityMovement : NetworkBehaviour
 
     #endregion
 
-    #region FlipX
-
-    [Networked(OnChanged = nameof(OnChangeFlipX))] public bool FlipX { set; get; }
-
-    public static void OnChangeFlipX(Changed<EntityMovement> entityMovement)
-    {
-        entityMovement.Behaviour.FlipX = true;
-    }
-    
-    #endregion
-    
     #region Movement
     
     [SerializeField] private float speed;
     public Vector2 Direction { set; get; }
     private void Update()
     {
+        
+        UpdateSpriteDirection();
+        
         _rb2d.velocity = Direction.normalized * speed;
-
-        if (Direction.x > 0) _spriteRenderer.flipX = false;
-        if (Direction.x < 0) _spriteRenderer.flipX = true;
         
         if (Direction.magnitude == 0)
         {
@@ -51,6 +40,18 @@ public class EntityMovement : NetworkBehaviour
         {
             _animator.PlayAnimation(EntityAnimator.AnimationState.Move);
         }
+    }
+
+    #endregion
+
+    #region Sprite Direction
+
+    protected bool FlipX;
+    protected virtual void UpdateSpriteDirection()
+    {
+        if (Direction.x > 0) FlipX = false;
+        if (Direction.x < 0) FlipX = true;
+        _spriteRenderer.flipX = FlipX;
     }
 
     #endregion
