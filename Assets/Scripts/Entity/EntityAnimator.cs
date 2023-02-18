@@ -15,7 +15,7 @@ public class EntityAnimator : NetworkBehaviour
 
     private void Update()
     {
-        UpdateAnimation();
+        
     }
     #endregion
 
@@ -40,7 +40,7 @@ public class EntityAnimator : NetworkBehaviour
 
     public static void OnQueuedAnimationState(Changed<EntityAnimator> changed)
     {
-        changed.Behaviour.PlayAnimation(changed.Behaviour.QueuedAnimationState);
+        changed.Behaviour.UpdateAnimation(changed.Behaviour.QueuedAnimationState);
     }
     
     public void PlayAnimation(AnimationState animationState)
@@ -48,9 +48,9 @@ public class EntityAnimator : NetworkBehaviour
         QueuedAnimationState = animationState;
     }
 
-    public void UpdateAnimation()
+    public void UpdateAnimation(AnimationState animationState)
     {
-        _animator.Play(AnimationState.Move.ToString());
+        _animator.Play(animationState.ToString());
     }
 
     #endregion
