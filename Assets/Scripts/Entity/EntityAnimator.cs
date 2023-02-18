@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AnimationEventDispatcher))]
 public class EntityAnimator : NetworkBehaviour
 {
     
@@ -11,6 +13,8 @@ public class EntityAnimator : NetworkBehaviour
     private void Start ()
     {
         _animator = GetComponent<Animator>();
+        AnimationEventDispatcher eventDispatcher = GetComponent<AnimationEventDispatcher>();
+        eventDispatcher.OnAnimationComplete.AddListener(e => EndAnimation());
     }
 
     private void Update()
@@ -20,55 +24,80 @@ public class EntityAnimator : NetworkBehaviour
     #endregion
 
     #region Play Animation
-
-    [Networked(OnChanged = nameof(OnQueuedAnimationState))]
-    [HideInInspector]
-    public EntityAnimationState NewAnimationState { set; get; }
-
-    private EntityAnimationState _queuedAnimationState = EntityAnimationState.None;
-    private EntityAnimationState _currentAnimationState = EntityAnimationState.None;
     
-    public static void OnQueuedAnimationState(Changed<EntityAnimator> changed)
-    {
-        changed.Behaviour.RunAnimator(changed.Behaviour.NewAnimationState.ToString());
-    }
+    private EntityAnimationState _queuedAnimationState = EntityAnimationState.None;
     
     public void PlayAnimation(EntityAnimationState animationState)
     {
         _queuedAnimationState = animationState;
     }
 
-    private void LoadAnimationState(EntityAnimationState animationState)
-    {
-        _currentAnimationState = animationState;
-        NewAnimationState = _currentAnimationState;
-    }
-
     #endregion
 
-    #region Update and Play Animation
-    public void UpdateAnimation()
+    #region Load and Run Animation
+    
+    [Networked(OnChanged = nameof(OnNewAnimationState))]
+    [HideInInspector]
+    public EntityAnimationState NewAnimationState { set; get; }
+    public static void OnNewAnimationState(Changed<EntityAnimator> changed)
     {
-        if (_currentAnimationState == EntityAnimationState.None && _queuedAnimationState == EntityAnimationState.None)
-        {
-            LoadAnimationState(EntityAnimationState.Idle);
-            return;
-        }
-        if (_queuedAnimationState == EntityAnimationState.None) return;
-
-        if (_queuedAnimationState != _currentAnimationState)
-        {
-            LoadAnimationState(_queuedAnimationState);
-        }
-
-        _queuedAnimationState = EntityAnimationState.None;
-        
+        changed.Behaviour.RunAnimator(changed.Behaviour.NewAnimationState.ToString());
     }
-
+    private void LoadAnimationState(EntityAnimationState animationState, bool doAnimationLock = true)
+    {
+        AnimationInProgress = true;
+        AnimationLocked = doAnimationLock;
+        
+        NewAnimationState = animationState;
+    }
     public void RunAnimator(String animationName)
     {
         _animator.Play(animationName);
     }
+
+    #endregion
+    
+    #region Animation Locks
+
+    public bool AnimationLocked { set; get; }
+    public bool AnimationInProgress { set; get; }
+    
+    public void RemoveAnimationLock()
+    {
+        AnimationLocked = false;
+    }
+    
+    public void EndAnimation()
+    {
+        AnimationInProgress = false;
+        RemoveAnimationLock();
+    }
+
+    private static HashSet<EntityAnimationState> _passiveStates = new HashSet<EntityAnimationState>()
+        {
+            EntityAnimationState.Idle,
+            EntityAnimationState.Move
+        };
+
+    #endregion
+
+    #region Update Animation
+    
+    public void UpdateAnimation()
+    {
+        EntityAnimationState nextAnimationState = _queuedAnimationState;
+        _queuedAnimationState = EntityAnimationState.None;
+
+        if (AnimationLocked) return;
+
+        bool passiveAnimation = _passiveStates.Contains(nextAnimationState);
+
+        if (passiveAnimation && AnimationInProgress) return;
+        
+        LoadAnimationState(nextAnimationState, !passiveAnimation);
+    }
+
+    
     
     #endregion
 
