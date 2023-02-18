@@ -8,14 +8,16 @@ public class EntityAnimator : NetworkBehaviour
     
     #region Initialization and Update
     private Animator _animator;
-    private void Start()
+    private void Start ()
     {
         _animator = GetComponent<Animator>();
+        AnimationEventDispatcher eventDispatcher = gameObject.AddComponent<AnimationEventDispatcher>();
+        eventDispatcher.OnAnimationComplete.AddListener(e => _currentAnimationState = AnimationState.None);
     }
 
     private void Update()
     {
-        
+        UpdateAnimation();
     }
     #endregion
 
@@ -26,33 +28,55 @@ public class EntityAnimator : NetworkBehaviour
             None,
             Idle,
             Move,
-            Attack
+            Action
         }
     #endregion
 
-    #region Play Animation
-    
-    private AnimationState _currentAnimationState;
-
     [Networked(OnChanged = nameof(OnQueuedAnimationState))]
     [HideInInspector]
-    public AnimationState QueuedAnimationState { set; get; } = AnimationState.Idle;
+    public AnimationState NewAnimationState { set; get; }
 
+    private AnimationState _queuedAnimationState = AnimationState.None;
+    private AnimationState _currentAnimationState = AnimationState.None;
+    
     public static void OnQueuedAnimationState(Changed<EntityAnimator> changed)
     {
-        changed.Behaviour.UpdateAnimation(changed.Behaviour.QueuedAnimationState);
+        changed.Behaviour.RunAnimator(changed.Behaviour.NewAnimationState.ToString());
     }
     
     public void PlayAnimation(AnimationState animationState)
     {
-        QueuedAnimationState = animationState;
+        _queuedAnimationState = animationState;
     }
 
-    public void UpdateAnimation(AnimationState animationState)
+    public void UpdateAnimation()
     {
-        _animator.Play(animationState.ToString());
+        if (_currentAnimationState == AnimationState.None && _queuedAnimationState == AnimationState.None)
+        {
+            SetAnimationState(AnimationState.Idle);
+            return;
+        }
+        if (_queuedAnimationState == AnimationState.None) return;
+
+        if (_queuedAnimationState != _currentAnimationState)
+        {
+            SetAnimationState(_queuedAnimationState);
+        }
+
+        _queuedAnimationState = AnimationState.None;
+        
     }
 
-    #endregion
+    public void RunAnimator(String animationName)
+    {
+        _animator.Play(animationName);
+    }
+    
+    private void SetAnimationState(AnimationState animationState)
+    {
+        _currentAnimationState = animationState;
+        NewAnimationState = _currentAnimationState;
+    }
+    
 
 }

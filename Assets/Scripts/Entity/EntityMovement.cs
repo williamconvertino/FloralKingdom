@@ -4,7 +4,7 @@ using Fusion;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EntityMovement : MonoBehaviour
+public class EntityMovement : NetworkBehaviour
 {
     #region Initialization
     
@@ -35,15 +35,16 @@ public class EntityMovement : MonoBehaviour
         if (_flipX != _entitySpriteRenderer.FlipX) _entitySpriteRenderer.FlipX = _flipX;
         
         _rb2d.velocity = Direction.normalized * speed;
-        
+
         if (Direction.magnitude == 0)
         {
-            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Idle);
+            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Idle);   
         }
         else
         {
-            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Move);
+            _entityAnimator.PlayAnimation(EntityAnimator.AnimationState.Move); 
         }
+        
     }
 
     #endregion
