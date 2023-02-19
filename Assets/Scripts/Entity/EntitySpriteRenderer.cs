@@ -17,7 +17,7 @@ public class EntitySpriteRenderer : NetworkBehaviour
 
     #region FlipX
 
-    [Networked(OnChanged = nameof(OnFlipXChanged))] [HideInInspector] public bool FlipX { set; get; }
+    [Networked(OnChanged = nameof(OnFlipXChanged))] [HideInInspector] public NetworkBool FlipX { set; get; }
 
     public static void OnFlipXChanged(Changed<EntitySpriteRenderer> changed)
     {
