@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5796077464316296187}
   - component: {fileID: 5796077464316296184}
   - component: {fileID: 3876769153452959028}
-  - component: {fileID: 6258028013098835412}
+  - component: {fileID: 1655739712978219624}
   m_Layer: 0
   m_Name: Entity Model
   m_TagString: Untagged
@@ -121,6 +121,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  OnAnimationComplete:
+    m_PersistentCalls:
+      m_Calls: []
   _NewAnimationState: 0
 --- !u!114 &3876769153452959028
 MonoBehaviour:
@@ -137,7 +140,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _FlipX:
     _value: 0
---- !u!114 &6258028013098835412
+--- !u!114 &1655739712978219624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,6 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec3a7421af543e781ba71c7c99acf46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAnimationComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7063664444440406677
 GameObject:
   m_ObjectHideFlags: 0

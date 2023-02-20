@@ -5,12 +5,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AnimationEventDispatcher))]
 public class EntityAnimator : NetworkBehaviour
 {
     #region Initialization and Update
 
-    public UnityAnimationEvent OnAnimationComplete { set; get; }
+    public UnityAnimationEvent OnAnimationComplete;
 
     private Animator _animator;
     private AnimationEventDispatcher _eventDispatcher;
@@ -18,7 +17,7 @@ public class EntityAnimator : NetworkBehaviour
     {
         _animator = GetComponent<Animator>();
         _eventDispatcher = GetComponent<AnimationEventDispatcher>();
-        OnAnimationComplete = _eventDispatcher.OnAnimationComplete;
+        _eventDispatcher.OnAnimationComplete.AddListener(e => OnAnimationComplete?.Invoke(e));
     }
 
     private void Update()

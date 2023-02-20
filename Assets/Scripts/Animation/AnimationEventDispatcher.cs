@@ -5,24 +5,20 @@ using UnityEngine.Events;
 public class UnityAnimationEvent : UnityEvent<string>{};
 [RequireComponent(typeof(Animator))]
 
-//Code sourced from https://gamedev.stackexchange.com/questions/117423/unity-detect-animations-end
+//Code from https://gamedev.stackexchange.com/questions/117423/unity-detect-animations-end
 public class AnimationEventDispatcher : MonoBehaviour
 {
-    public UnityAnimationEvent OnAnimationStart { set; get; }
-    public UnityAnimationEvent OnAnimationComplete { set; get; }
+    public UnityAnimationEvent OnAnimationStart;
+    public UnityAnimationEvent OnAnimationComplete;
     
-    private Animator _animator;
+    Animator animator;
     
     void Awake()
     {
-        _animator = GetComponent<Animator>();
-
-        OnAnimationStart = new UnityAnimationEvent();
-        OnAnimationComplete = new UnityAnimationEvent();
-        
-        for(int i=0; i<_animator.runtimeAnimatorController.animationClips.Length; i++)
+        animator = GetComponent<Animator>();
+        for(int i=0; i<animator.runtimeAnimatorController.animationClips.Length; i++)
         {
-            AnimationClip clip = _animator.runtimeAnimatorController.animationClips[i];
+            AnimationClip clip = animator.runtimeAnimatorController.animationClips[i];
             
             AnimationEvent animationStartEvent = new AnimationEvent();
             animationStartEvent.time = 0;
@@ -39,12 +35,12 @@ public class AnimationEventDispatcher : MonoBehaviour
         }
     }
 
-    public void AnimationStartHandler(string animationName)
+    public void AnimationStartHandler(string name)
     {
-        OnAnimationStart?.Invoke(animationName);
+        OnAnimationStart?.Invoke(name);
     }
-    public void AnimationCompleteHandler(string animationName)
+    public void AnimationCompleteHandler(string name)
     {
-        OnAnimationComplete?.Invoke(animationName);
+        OnAnimationComplete?.Invoke(name);
     }
 }
