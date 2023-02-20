@@ -4,29 +4,30 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : NetworkBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] protected float speed;
     
     #region Initialization
 
-    private Rigidbody2D _rb2d;
-    private EntitySpriteRenderer _entitySpriteRenderer;
-    private EntityAnimator _entityAnimator;
+    protected Rigidbody2D rb2d;
+    protected EntitySpriteRenderer entitySpriteRenderer;
+    protected EntityAnimator entityAnimator;
     
-    private Vector2 _direction;
-    private bool _doAttack;
+    protected Vector2 Direction;
+    protected bool DoAttack;
 
     public void Awake()
     {
-        _rb2d = GetComponent<Rigidbody2D>();
-        _entitySpriteRenderer = GetComponentInChildren<EntitySpriteRenderer>();
-        _entityAnimator = GetComponentInChildren<EntityAnimator>();
+        rb2d = GetComponent<Rigidbody2D>();
+        entitySpriteRenderer = GetComponentInChildren<EntitySpriteRenderer>();
+        entityAnimator = GetComponentInChildren<EntityAnimator>();
+        entityAnimator.OnAnimationComplete.AddListener(e => EndAction());
     }
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out NetworkInputData inputData))
         {
-            _direction = inputData.Direction;
-            _doAttack = inputData.Attack;
+            Direction = inputData.Direction;
+            DoAttack = inputData.Attack;
         }
     }
     private void Update()
@@ -42,15 +43,16 @@ public class PlayerController : NetworkBehaviour
 
     #region PlayerState
 
-    private enum PlayerState
+    protected enum PlayerState
     {
         None,
         Idle,
         Move,
-        Action
+        Action_Locked,
+        Action_Unlocked
     }
 
-    private PlayerState _playerState = PlayerState.None;
+    protected PlayerState playerState = PlayerState.None;
 
     private void UpdatePlayerStateStart()
     {
@@ -59,68 +61,72 @@ public class PlayerController : NetworkBehaviour
     
     private void UpdatePlayerStateEnd()
     {
-        if (_playerState == PlayerState.None)
+        if (playerState == PlayerState.None)
         {
-            _playerState = PlayerState.Idle;
-            _entityAnimator.PlayAnimation(EntityAnimationState.Idle);
+            playerState = PlayerState.Idle;
+            entityAnimator.PlayAnimation(EntityAnimationState.Idle);
         }
     }
     
     #endregion
     
     #region Movement
-    
+
+    protected bool DoMovement { set; get; } = true;
+    protected bool FreezePosition { set; get; } = false;
     protected virtual void UpdateMovement()
     {
-        if (BlockMovement()) return;
+        if (!DoMovement) return;
         
-        _rb2d.velocity = _direction.normalized * speed;
+        if (!FreezePosition) rb2d.velocity = Direction.normalized * speed;
 
-        if (_direction.magnitude == 0)
-        {
-            _playerState = PlayerState.None;
-        }
-        else
-        {
-            _playerState = PlayerState.Move;
-            _entityAnimator.PlayAnimation(EntityAnimationState.Move);
-        }
-    }
+        if (playerState == PlayerState.Action_Locked) return;
 
-    protected virtual bool BlockMovement()
-    {
-        return false;
+        if (Direction.magnitude == 0)
+        {
+            if (playerState == PlayerState.Move) playerState = PlayerState.None;
+            return;
+        }
+
+        if (playerState == PlayerState.None || playerState == PlayerState.Idle)
+        {
+            playerState = PlayerState.Move;
+            entityAnimator.PlayAnimation(EntityAnimationState.Move);
+        }
     }
 
     #endregion
 
     #region Direction
-    
-    private bool _flipX;
+
+    protected bool DoDirectionChange { set; get; } = true;
+    protected bool _flipX;
     protected virtual void UpdateDirection()
     {
-        if (!AllowDirectionChange()) return;
-        if (_direction.x > 0) _flipX = false;
-        if (_direction.x < 0) _flipX = true;
-        if (_flipX != _entitySpriteRenderer.FlipX) _entitySpriteRenderer.FlipX = _flipX;
+        if (!DoDirectionChange) return;
+        if (Direction.x > 0) _flipX = false;
+        if (Direction.x < 0) _flipX = true;
+        if (_flipX != entitySpriteRenderer.FlipX) entitySpriteRenderer.FlipX = _flipX;
     }
 
-    protected virtual bool AllowDirectionChange()
-    {
-        return true;
-    }
-    
     #endregion
     
     #region Action
     protected virtual void UpdateAction()
     {
-        if (BlockAction()) return;
+        
     }
 
-    protected virtual bool BlockAction()
+    public void UnlockAction()
     {
-        return true;
+        if (playerState == PlayerState.Action_Locked) playerState = PlayerState.Action_Unlocked;
+    }
+
+    public void EndAction()
+    {
+        print("End");
+        if (playerState == PlayerState.Action_Locked || playerState == PlayerState.Action_Unlocked)
+            playerState = PlayerState.None;
     }
 
     #endregion

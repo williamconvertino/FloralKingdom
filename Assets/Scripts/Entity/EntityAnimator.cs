@@ -2,16 +2,23 @@ using System;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AnimationEventDispatcher))]
 public class EntityAnimator : NetworkBehaviour
 {
     #region Initialization and Update
+
+    public UnityAnimationEvent OnAnimationComplete { set; get; }
+
     private Animator _animator;
+    private AnimationEventDispatcher _eventDispatcher;
     private void Awake ()
     {
         _animator = GetComponent<Animator>();
+        _eventDispatcher = GetComponent<AnimationEventDispatcher>();
+        OnAnimationComplete = _eventDispatcher.OnAnimationComplete;
     }
 
     private void Update()
