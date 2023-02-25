@@ -53,7 +53,7 @@ public class EntityAnimator : NetworkBehaviour
     {
         bool onAnimationEnd = _onAnimationEnd;
         _onAnimationEnd = false;
-        if (onAnimationEnd && CurrentAnimationState == _queuedAnimationState)
+        if (onAnimationEnd && CurrentAnimationState.IsAction() && CurrentAnimationState == _queuedAnimationState)
         {
             ForceAnimationPlayToggle = !ForceAnimationPlayToggle;
             return;

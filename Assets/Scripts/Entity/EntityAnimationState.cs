@@ -12,7 +12,7 @@ public enum EntityAnimationState
 
 static class EntityAnimationStateExtensions
 {
-    public static bool IsAttack(this EntityAnimationState animationState)
+    public static bool IsAction(this EntityAnimationState animationState)
     {
         return !(animationState == EntityAnimationState.None || animationState == EntityAnimationState.Idle ||
                  animationState == EntityAnimationState.Move);
