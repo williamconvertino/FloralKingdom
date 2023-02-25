@@ -19,13 +19,19 @@ public class EntityAnimator : NetworkBehaviour
         _eventDispatcher = GetComponent<AnimationEventDispatcher>();
         _eventDispatcher.OnAnimationComplete.AddListener(e => OnAnimationComplete?.Invoke(e));
     }
-
-    private void Update()
-    {
-        UpdateAnimation();
-    }
     #endregion
 
+    #region CurrentAnimationState
+
+    [Networked(OnChanged = nameof(OnNewAnimationState))]
+    [HideInInspector]
+    public EntityAnimationState CurrentAnimationState { set; get; }
+    public static void OnNewAnimationState(Changed<EntityAnimator> changed)
+    {
+        changed.Behaviour.RunAnimator(changed.Behaviour.CurrentAnimationState);
+    }
+    #endregion
+    
     #region Play Animation
     
     private EntityAnimationState _queuedAnimationState = EntityAnimationState.None;
@@ -35,26 +41,21 @@ public class EntityAnimator : NetworkBehaviour
     }
 
     #endregion
-
-    #region Load and Run Animation
     
-    [Networked(OnChanged = nameof(OnNewAnimationState))]
-    [HideInInspector]
-    public EntityAnimationState NewAnimationState { set; get; }
-    private void UpdateAnimation()
+    #region Update animation
+    private void Update()
     {
         if (_queuedAnimationState == EntityAnimationState.None) return;
-        NewAnimationState = _queuedAnimationState;
+        CurrentAnimationState = _queuedAnimationState;
         _queuedAnimationState = EntityAnimationState.None;
     }
-    public static void OnNewAnimationState(Changed<EntityAnimator> changed)
-    {
-        changed.Behaviour.RunAnimator(changed.Behaviour.NewAnimationState.ToString());
-    }
-    public void RunAnimator(String animationName)
-    {
-        _animator.Play(animationName);
-    }
+    #endregion
 
+    #region Run Animator
+    public void RunAnimator(EntityAnimationState animationState)
+    {
+        if (animationState == EntityAnimationState.None) return;
+        _animator.Play(animationState.ToString());
+    }
     #endregion
 }

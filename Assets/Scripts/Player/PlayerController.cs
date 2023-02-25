@@ -33,7 +33,6 @@ public class PlayerController : NetworkBehaviour
     private void Update()
     {
         UpdatePlayerStateStart();
-        UpdateLocks();
         UpdateAction();
         UpdateMovement();
         UpdateDirection();
@@ -118,28 +117,12 @@ public class PlayerController : NetworkBehaviour
         
     }
 
-    #endregion
-
-    #region Locks
-
-    private void UpdateLocks()
+    public void EndAction()
     {
-        if (_endAction) playerState = PlayerState.None;
-        _endAction = false;
-    }
-
-    private bool _unlockAction;
-    private void UnlockAction()
-    {
-        
-    }
-
-    private bool _endAction;
-    private void EndAction()
-    {
-        _endAction = true;
+        playerState = PlayerState.None;
     }
     
     #endregion
+    
 
 }
