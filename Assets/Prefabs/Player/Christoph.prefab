@@ -15,6 +15,10 @@ PrefabInstance:
     - target: {fileID: 7063664444440406673, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
       propertyPath: NetworkedBehaviours.Array.data[1]
       value: 
+      objectReference: {fileID: 5446294495528584404}
+    - target: {fileID: 7063664444440406673, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[2]
+      value: 
       objectReference: {fileID: 758013268}
     - target: {fileID: 7063664444440406673, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
@@ -70,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7063664444440406677, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
       propertyPath: m_Name
-      value: Christoph Variant
+      value: Christoph
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1724858542779026094, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
@@ -81,6 +85,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 758013268}
   m_SourcePrefab: {fileID: 100100000, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
+--- !u!114 &5446294495528584404 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5347701761363408615, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
+  m_PrefabInstance: {fileID: 118155270910014003}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7180119844388542630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfbbaad796b948b4b4f51e206fbc0abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7180119844388542630 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7063664444440406677, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
