@@ -13,11 +13,12 @@ public class EntityAnimator : NetworkBehaviour
 
     private Animator _animator;
     private AnimationEventDispatcher _eventDispatcher;
+    private bool _onAnimationEnd;
     private void Awake ()
     {
         _animator = GetComponent<Animator>();
         _eventDispatcher = GetComponent<AnimationEventDispatcher>();
-        _eventDispatcher.OnAnimationComplete.AddListener(e => OnAnimationComplete?.Invoke(e));
+        _eventDispatcher.OnAnimationComplete.AddListener(e => { OnAnimationComplete?.Invoke(e); _onAnimationEnd = true; });
     }
     #endregion
 
@@ -30,6 +31,11 @@ public class EntityAnimator : NetworkBehaviour
     {
         changed.Behaviour.RunAnimator(changed.Behaviour.CurrentAnimationState);
     }
+
+    [Networked(OnChanged = nameof(OnNewAnimationState))]
+    [HideInInspector]
+    public NetworkBool ForceAnimationPlayToggle { set; get; }
+
     #endregion
     
     #region Play Animation
@@ -45,6 +51,13 @@ public class EntityAnimator : NetworkBehaviour
     #region Update animation
     private void Update()
     {
+        bool onAnimationEnd = _onAnimationEnd;
+        _onAnimationEnd = false;
+        if (onAnimationEnd && CurrentAnimationState == _queuedAnimationState)
+        {
+            ForceAnimationPlayToggle = !ForceAnimationPlayToggle;
+            return;
+        }
         if (_queuedAnimationState == EntityAnimationState.None) return;
         CurrentAnimationState = _queuedAnimationState;
         _queuedAnimationState = EntityAnimationState.None;
