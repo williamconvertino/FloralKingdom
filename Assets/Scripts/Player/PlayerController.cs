@@ -2,6 +2,7 @@ using System;
 using Fusion;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(EntityActionManager))]
 public class PlayerController : NetworkBehaviour
 {
     [SerializeField] protected float speed;
@@ -9,6 +10,7 @@ public class PlayerController : NetworkBehaviour
     #region Initialization
 
     protected Rigidbody2D rb2d;
+    protected EntityActionManager entityActionManager;
     protected EntitySpriteRenderer entitySpriteRenderer;
     protected EntityAnimator entityAnimator;
     
@@ -18,6 +20,8 @@ public class PlayerController : NetworkBehaviour
     public void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        entityActionManager = GetComponent<EntityActionManager>();
+        
         entitySpriteRenderer = GetComponentInChildren<EntitySpriteRenderer>();
         entityAnimator = GetComponentInChildren<EntityAnimator>();
         entityAnimator.OnAnimationComplete.AddListener(e => EndAction());
@@ -124,5 +128,4 @@ public class PlayerController : NetworkBehaviour
     
     #endregion
     
-
 }

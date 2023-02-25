@@ -12,6 +12,7 @@ public class ChristophController : PlayerController
         {
             playerState = PlayerState.Action_Locked;
             entityAnimator.PlayAnimation(EntityAnimationState.Headbutt);
+            entityActionManager.StartAction("Headbutt");
         }
     }
 

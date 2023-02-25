@@ -6,9 +6,7 @@ using UnityEngine.UI;
 
 public class EntityHealth : NetworkBehaviour
 {
-    [Header("Entity Data")]
-    public EntityTeam team;
-    
+
     [Networked(OnChanged = nameof(OnHealthChanged))]
     public int Health { set; get; }
     
