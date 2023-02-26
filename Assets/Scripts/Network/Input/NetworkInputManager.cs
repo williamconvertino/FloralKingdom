@@ -26,7 +26,7 @@ public class NetworkInputManager : MonoBehaviour
         input.Set(networkInputData);
     }
 
-    private Vector2 GetDirection()
+    public static Vector2 GetDirection()
     {
         Vector2 direction = Vector2.zero;
  
@@ -38,7 +38,7 @@ public class NetworkInputManager : MonoBehaviour
         return direction;
     }
 
-    private bool GetAttack()
+    public static bool GetAttack()
     {
         return Input.GetKey(KeyCode.Space);
     }

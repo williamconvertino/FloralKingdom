@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Animator))]
 public class EntityAnimator : NetworkBehaviour
 {
-    #region Initialization and Update
+    #region Initialization
 
     public UnityAnimationEvent OnAnimationComplete;
 

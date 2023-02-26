@@ -44,6 +44,8 @@ public class NetworkManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (!runner.IsServer) return;
+
+        if (NetworkPlayerSpawner.Instance == null) return;
         
         NetworkPlayerSpawner.Instance.SpawnPlayer(runner, player);
     }

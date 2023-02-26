@@ -8,7 +8,7 @@ public abstract class SingleAction : Action
 {
     [Header("Action Info")]
     [SerializeField] private float delay;
-
+    [SerializeField] private Vector2 offset;
     [SerializeField] private bool followSource;
 
     [Header("Target Info")]
@@ -22,17 +22,29 @@ public abstract class SingleAction : Action
     private Coroutine _currentCoroutine;
     private GameObject _source;
     private Vector2 _position;
-    private void Initialize()
+    private EntitySpriteRenderer _sourceSpriteRenderer;
+
+    private void Update()
+    {
+        if (followSource) UpdateColliderPosition();
+    }
+
+    private void UpdateColliderPosition()
+    {
+        transform.localPosition = new Vector2(-offset.x * (_sourceSpriteRenderer.FlipX ? 1 : -1), -offset.y);
+    }
+    private void Initialize(GameObject source)
     {
         _collider = GetComponent<Collider2D>();
+        _source = source;
+        if (followSource) _sourceSpriteRenderer = _source.GetComponentInChildren<EntitySpriteRenderer>();
         if (followSource) transform.parent = _source.transform;
-        _position = transform.position;
+        UpdateColliderPosition();
     }
     
     public override void StartAction(GameObject source)
     {
-        _source = source;
-        Initialize();
+        Initialize(source);
         _currentCoroutine = StartCoroutine(ActionEnumerator());
     }
 

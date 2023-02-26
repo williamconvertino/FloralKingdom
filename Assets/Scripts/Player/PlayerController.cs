@@ -34,6 +34,10 @@ public class PlayerController : NetworkBehaviour
             DoAttack = inputData.Attack;
         }
     }
+
+    #endregion
+
+    #region Update
     private void Update()
     {
         UpdatePlayerStateStart();
@@ -42,9 +46,8 @@ public class PlayerController : NetworkBehaviour
         UpdateDirection();
         UpdatePlayerStateEnd();
     }
-
     #endregion
-
+    
     #region PlayerState
 
     protected enum PlayerState
