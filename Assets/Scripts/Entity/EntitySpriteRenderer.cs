@@ -21,16 +21,12 @@ public class EntitySpriteRenderer : NetworkBehaviour
 
     public static void OnFlipXChanged(Changed<EntitySpriteRenderer> changed)
     {
-        bool flipXCurrent = changed.Behaviour.FlipX;
-        changed.LoadOld();
-        bool flipXOld = changed.Behaviour.FlipX;
-        
-        if (flipXCurrent != flipXOld) changed.Behaviour.OnFlipX(flipXCurrent);
+        changed.Behaviour.UpdateDirection();
     }
 
-    public void OnFlipX(bool flipX)
+    public void UpdateDirection()
     {
-        _spriteRenderer.flipX = flipX;
+        _spriteRenderer.flipX = FlipX;
     }
 
     #endregion

@@ -7,8 +7,7 @@ public class SingleAttack : SingleAction
     {
         foreach (GameObject target in targets)
         {
-            print("Hit: " + target.name);
-            if (!target.TryGetComponent(out EntityHealth targetHealth)) Debug.LogError("Error: Attempted to damage an object without a health field.");
+            if (!target.TryGetComponent(out EntityHealthManager targetHealth)) Debug.LogError("Error: Attempted to damage an object without a health field.");
             targetHealth.Hit(damage);
         }
     }

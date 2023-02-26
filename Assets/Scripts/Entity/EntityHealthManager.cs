@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EntityHealth : NetworkBehaviour
+public class EntityHealthManager : NetworkBehaviour
 {
 
     [Networked(OnChanged = nameof(OnHealthChanged))]
@@ -55,7 +55,7 @@ public class EntityHealth : NetworkBehaviour
         healthText.text = "Health: " + Health;
     }
 
-    public static void OnHealthChanged(Changed<EntityHealth> changed)
+    public static void OnHealthChanged(Changed<EntityHealthManager> changed)
     {
         changed.Behaviour.UpdateHealthBar();
     }
