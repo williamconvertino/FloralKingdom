@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class EntityActionManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] actions;
+    [Header("Actions")]
+    [SerializeField] private GameObject[] _actions;
 
+    [Header("Debug Tools")]
+    [SerializeField] private bool _debugMode;
+    
     private Dictionary<String, GameObject> _actionMap;
-    private Dictionary<String, IAction> _activeActions;
+    private Dictionary<String, Action> _activeActions;
 
+    
     private void Awake()
     {
-        _actionMap = actions.ToDictionary(prefab => prefab.name);
-        _activeActions = new Dictionary<string, IAction>();
+        _actionMap = _actions.ToDictionary(prefab => prefab.name);
+        _activeActions = new Dictionary<string, Action>();
     }
 
     public void StartAction(String actionName)
@@ -21,18 +26,11 @@ public class EntityActionManager : MonoBehaviour
         if (!_actionMap.TryGetValue(actionName, out GameObject actionPrefab)) Debug.LogError("Could not find action: " + actionName);
         
         GameObject actionObject = Instantiate(actionPrefab, transform.position, Quaternion.identity);
-        IAction actionComponent = actionObject.GetComponent<IAction>();
+        Action actionComponent = actionObject.GetComponent<Action>();
+        
+        actionComponent.DebugMode = _debugMode;
         
         actionComponent.StartAction(gameObject);
-        // if (_activeActions.ContainsKey(actionName)) StopAction(actionName);
-        // _activeActions.Add(actionName, actionComponent);
     }
-    //
-    // public void StopAction(String actionName)
-    // {
-    //     if (!_activeActions.TryGetValue(actionName, out IAction actionComponent)) return;
-    //     actionComponent.StopAction(gameObject);
-    //     _activeActions.Remove(actionName);
-    // }
-    
+
 }

@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f685f0e11a437694e93d40c1ef7555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _doDebug: 0
   delay: 0.1
   followSource: 1
   targetLayers:

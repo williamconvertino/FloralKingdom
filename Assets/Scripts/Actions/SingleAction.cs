@@ -4,7 +4,7 @@ using System.Linq;
 using Fusion;
 using UnityEngine;
 
-public abstract class SingleAction : MonoBehaviour, IAction
+public abstract class SingleAction : Action
 {
     [Header("Action Info")]
     [SerializeField] private float delay;
@@ -17,7 +17,7 @@ public abstract class SingleAction : MonoBehaviour, IAction
     [SerializeField] private bool allowTargetSelf;
 
     private const int AbsoluteMaxTargets = 20;
-    
+
     private Collider2D _collider;
     private Coroutine _currentCoroutine;
     private GameObject _source;
@@ -29,14 +29,14 @@ public abstract class SingleAction : MonoBehaviour, IAction
         _position = transform.position;
     }
     
-    public void StartAction(GameObject source)
+    public override void StartAction(GameObject source)
     {
         _source = source;
         Initialize();
         _currentCoroutine = StartCoroutine(ActionEnumerator());
     }
 
-    public void StopAction(GameObject source)
+    public override void StopAction(GameObject source)
     {
         StopCoroutine(_currentCoroutine);
         Destroy(gameObject);
@@ -47,7 +47,7 @@ public abstract class SingleAction : MonoBehaviour, IAction
         yield return new WaitForSeconds(delay);
         GameObject[] targets = GenerateTargets();
         ExecuteAction(targets);
-        Destroy(gameObject);
+        if (!DebugMode) Destroy(gameObject);
     }
 
     private GameObject[] GenerateTargets()
