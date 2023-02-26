@@ -31,7 +31,7 @@ public abstract class SingleAction : Action
 
     private void UpdateColliderPosition()
     {
-        transform.localPosition = new Vector2(-offset.x * (_sourceSpriteRenderer.FlipX ? 1 : -1), -offset.y);
+        transform.localPosition = new Vector2(offset.x * (_sourceSpriteRenderer.FlipX ? -1 : 1), offset.y);
     }
     private void Initialize(GameObject source)
     {

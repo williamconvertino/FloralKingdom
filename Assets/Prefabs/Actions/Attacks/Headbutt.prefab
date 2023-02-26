@@ -65,9 +65,9 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.12605971, y: 0.031514883}
-  m_Size: {x: 1.0042387, y: 1.1890895}
-  m_Direction: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 0.9}
+  m_Direction: 1
 --- !u!114 &932332199843129495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugMode: 0
   delay: 0.1
-  offset: {x: 0.9, y: 0.2}
+  offset: {x: 0.65, y: 0.1}
   followSource: 1
   targetLayers:
     serializedVersion: 2
