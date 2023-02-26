@@ -11,9 +11,7 @@ public class EntityHealthManager : NetworkBehaviour
     public int Health { set; get; }
     
     [Header("Health Bar")]
-    public TextMeshProUGUI healthText;
-    public Vector2 offset = new Vector2(1.0f, 1.0f);
-    public Transform entityTransform;
+    public TextMeshPro healthText;
     private bool _showHealthBar;
     private Camera _camera;
     
@@ -23,13 +21,7 @@ public class EntityHealthManager : NetworkBehaviour
         if (healthText != null)
         {
             _showHealthBar = true;
-            _camera = Camera.main;
         }
-    }
-    private void Update()
-    {
-        if (!_showHealthBar) return;
-        healthText.transform.position = _camera.WorldToScreenPoint(entityTransform.position + new Vector3(offset.x, offset.y, 0));
     }
     #endregion
 
@@ -51,8 +43,7 @@ public class EntityHealthManager : NetworkBehaviour
 
     public void UpdateHealthBar()
     {
-        if (!_showHealthBar) return;
-        healthText.text = "Health: " + Health;
+        if (_showHealthBar) healthText.text = "Health: " + Health;
     }
 
     public static void OnHealthChanged(Changed<EntityHealthManager> changed)
