@@ -11,7 +11,7 @@ public class PlayerController : NetworkBehaviour
 
     protected Rigidbody2D rb2d;
     protected EntityActionManager entityActionManager;
-    protected EntitySpriteRenderer entitySpriteRenderer;
+    protected EntityModel entityModel;
     protected EntityAnimator entityAnimator;
     
     protected Vector2 Direction;
@@ -22,7 +22,7 @@ public class PlayerController : NetworkBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         entityActionManager = GetComponent<EntityActionManager>();
         
-        entitySpriteRenderer = GetComponentInChildren<EntitySpriteRenderer>();
+        entityModel = GetComponentInChildren<EntityModel>();
         entityAnimator = GetComponentInChildren<EntityAnimator>();
         entityAnimator.OnAnimationComplete.AddListener(e => EndAction());
     }
@@ -113,7 +113,7 @@ public class PlayerController : NetworkBehaviour
         if (!DoDirectionChange) return;
         if (Direction.x > 0) _flipX = false;
         if (Direction.x < 0) _flipX = true;
-        if (_flipX != entitySpriteRenderer.FlipX) entitySpriteRenderer.FlipX = _flipX;
+        if (_flipX != entityModel.FlipX) entityModel.FlipX = _flipX;
     }
 
     #endregion

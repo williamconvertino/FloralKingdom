@@ -1,32 +1,20 @@
 using Fusion;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class EntitySpriteRenderer : NetworkBehaviour
+public class EntityModel : NetworkBehaviour
 {
-    #region Initialization
-
-    private SpriteRenderer _spriteRenderer;
     
-    private void Awake()
-    {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    #endregion
-
     #region FlipX
-
     [Networked(OnChanged = nameof(OnFlipXChanged))] [HideInInspector] public NetworkBool FlipX { set; get; }
 
-    public static void OnFlipXChanged(Changed<EntitySpriteRenderer> changed)
+    public static void OnFlipXChanged(Changed<EntityModel> changed)
     {
         changed.Behaviour.UpdateDirection();
     }
 
     public void UpdateDirection()
     {
-        _spriteRenderer.flipX = FlipX;
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * (FlipX ? -1 : 1), transform.localScale.y, transform.localScale.z);
     }
 
     #endregion

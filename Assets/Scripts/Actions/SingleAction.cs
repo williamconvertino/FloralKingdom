@@ -22,7 +22,7 @@ public abstract class SingleAction : Action
     private Coroutine _currentCoroutine;
     private GameObject _source;
     private Vector2 _position;
-    private EntitySpriteRenderer _sourceSpriteRenderer;
+    private EntityModel _sourceModel;
 
     private void Update()
     {
@@ -31,13 +31,13 @@ public abstract class SingleAction : Action
 
     private void UpdateColliderPosition()
     {
-        transform.localPosition = new Vector2(offset.x * (_sourceSpriteRenderer.FlipX ? -1 : 1), offset.y);
+        transform.localPosition = new Vector2(offset.x * (_sourceModel.FlipX ? -1 : 1), offset.y);
     }
     private void Initialize(GameObject source)
     {
         _collider = GetComponent<Collider2D>();
         _source = source;
-        if (followSource) _sourceSpriteRenderer = _source.GetComponentInChildren<EntitySpriteRenderer>();
+        if (followSource) _sourceModel = _source.GetComponentInChildren<EntityModel>();
         if (followSource) transform.parent = _source.transform;
         UpdateColliderPosition();
     }
