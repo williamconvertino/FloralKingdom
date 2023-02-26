@@ -1,6 +1,7 @@
+using Fusion;
 using UnityEngine;
 
-public class TestingStone : MonoBehaviour
+public class TestingStone : NetworkBehaviour
 {
     public Transform Point1;
     public Transform Point2;
@@ -13,19 +14,19 @@ public class TestingStone : MonoBehaviour
     private void Awake()
     {
         _direction = Point1.position - Point2.position;
-        _maxDistance = _direction.magnitude;
+        _maxDistance = Vector3.Distance(Point1.position, Point2.position);
         _direction.Normalize();
     }
 
     private void Move()
     {
-        transform.position += _direction * Speed * Time.deltaTime * _flip;
+        transform.position += _direction * Speed * Runner.DeltaTime * _flip;
     }
     
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
         Move();
-        if (Vector3.Magnitude(Point1.position - transform.position) > _maxDistance ||  Vector3.Magnitude(Point2.position - transform.position) > _maxDistance)
+        if (Vector3.Distance(Point1.position, transform.position) >= _maxDistance ||  Vector3.Distance(Point2.position, transform.position) >= _maxDistance)
         {
             _flip *= -1;
             Move();
