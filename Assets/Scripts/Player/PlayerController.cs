@@ -25,6 +25,7 @@ public class PlayerController : NetworkBehaviour
         entityModel = GetComponentInChildren<EntityModel>();
         entityAnimator = GetComponentInChildren<EntityAnimator>();
         entityAnimator.OnAnimationComplete.AddListener(e => EndAction());
+        entityAnimator.OnActionLockComplete.AddListener(e => EndActionLock());
     }
     public override void FixedUpdateNetwork()
     {
@@ -61,12 +62,12 @@ public class PlayerController : NetworkBehaviour
 
     protected PlayerState playerState = PlayerState.None;
 
-    private void UpdatePlayerStateStart()
+    protected virtual void UpdatePlayerStateStart()
     {
         
     }
     
-    private void UpdatePlayerStateEnd()
+    protected virtual void UpdatePlayerStateEnd()
     {
         if (playerState == PlayerState.None)
         {
@@ -83,7 +84,11 @@ public class PlayerController : NetworkBehaviour
     protected bool FreezePosition { set; get; } = false;
     protected virtual void UpdateMovement()
     {
-        if (!DoMovement) return;
+        if (!DoMovement)
+        {
+            rb2d.velocity = Vector2.zero;
+            return;
+        }
         
         if (!FreezePosition) rb2d.velocity = Direction.normalized * speed;
 
@@ -123,10 +128,13 @@ public class PlayerController : NetworkBehaviour
     {
         
     }
-
     public void EndAction()
     {
         playerState = PlayerState.None;
+    }
+    public void EndActionLock()
+    {
+        playerState = PlayerState.Action_Unlocked;
     }
     
     #endregion

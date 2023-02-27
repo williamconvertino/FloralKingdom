@@ -10,6 +10,7 @@ public class EntityAnimator : NetworkBehaviour
     #region Initialization
 
     public UnityAnimationEvent OnAnimationComplete;
+    public UnityAnimationEvent OnActionLockComplete;
 
     private Animator _animator;
     private AnimationEventDispatcher _eventDispatcher;
@@ -22,6 +23,14 @@ public class EntityAnimator : NetworkBehaviour
     }
     #endregion
 
+    #region Animation Events
+
+    public void TriggerActionLockComplete()
+    {
+        OnActionLockComplete.Invoke(_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+    }
+    #endregion
+    
     #region CurrentAnimationState
 
     [Networked(OnChanged = nameof(OnNewAnimationState))]
