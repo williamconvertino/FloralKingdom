@@ -71,11 +71,11 @@ public abstract class SingleAction : Action
         
         if (numTargets <= maxTargets)
         {
-            targets = hits.Take(numTargets).Select(col => col.gameObject).Where(target => allowTargetSelf || target != _source).ToArray();
+            targets = hits.Take(numTargets).Select(col => col.gameObject).Distinct().Where(target => allowTargetSelf || target != _source).ToArray();
         }
         else
         {
-            targets = hits.Take(numTargets).Select(col => col.gameObject).Where(target => allowTargetSelf || target != _source).OrderBy(target => Vector2.Distance(target.transform.position, _position)).Take(maxTargets).ToArray();
+            targets = hits.Take(numTargets).Select(col => col.gameObject).Distinct().Where(target => allowTargetSelf || target != _source).OrderBy(target => Vector2.Distance(target.transform.position, _position)).Take(maxTargets).ToArray();
         }
 
         return targets;

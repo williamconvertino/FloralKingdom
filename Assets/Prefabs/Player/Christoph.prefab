@@ -24,12 +24,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4078192792466534564}
-  m_LocalRotation: {x: 0, y: 0, z: -0.13052624, w: 0.9914449}
+  m_LocalRotation: {x: -0, y: -0, z: -0.13052624, w: 0.9914449}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1095784905251849246}
+  m_Father: {fileID: 3462132610856057777}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
 --- !u!70 &1934140115449406017
@@ -91,12 +91,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7436100970526501398}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1095784905251849246}
+  m_Father: {fileID: 3462132610856057777}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1681546081873382560
@@ -254,10 +254,10 @@ PrefabInstance:
     - {fileID: 1724858542779026094, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1051246396137272877, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3578165789887334786, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2013985973689431091}
-    - targetCorrespondingSourceObject: {fileID: 1051246396137272877, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3578165789887334786, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2244112227680884021}
     m_AddedComponents:
@@ -290,9 +290,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a746037df06b43dc816672e6caed4845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1095784905251849246 stripped
+--- !u!4 &3462132610856057777 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1051246396137272877, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3578165789887334786, guid: 59873f6513ff53c4c883b29afb9d5579, type: 3}
   m_PrefabInstance: {fileID: 118155270910014003}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7069981435551119776 stripped

@@ -555,6 +555,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 359055709490726335, guid: 93e6c43130b799243bff74328806017c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 459920729858338658, guid: 93e6c43130b799243bff74328806017c, type: 3}
       propertyPath: m_Name
       value: TestingStone
@@ -564,9 +568,17 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2753172876374486514, guid: 93e6c43130b799243bff74328806017c, type: 3}
-      propertyPath: NetworkedBehaviours.Array.data[2]
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 8945379773137990289}
+    - target: {fileID: 2753172876374486514, guid: 93e6c43130b799243bff74328806017c, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[1]
       value: 
       objectReference: {fileID: 6186595194224009417}
+    - target: {fileID: 2753172876374486514, guid: 93e6c43130b799243bff74328806017c, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[2]
+      value: 
+      objectReference: {fileID: 8945379773137990291}
     - target: {fileID: 4270460922484939235, guid: 93e6c43130b799243bff74328806017c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.43
@@ -646,6 +658,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88843ceb8db5f564fa3c3a1d02d0b921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8945379773137990289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4217661752523040923, guid: 93e6c43130b799243bff74328806017c, type: 3}
+  m_PrefabInstance: {fileID: 3919822470329908515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753911691593287627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ed4c87556e230440982c0fd2af95af9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &8945379773137990290
 Rigidbody2D:
   serializedVersion: 4
@@ -673,3 +696,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &8945379773137990291 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9102704797179778047, guid: 93e6c43130b799243bff74328806017c, type: 3}
+  m_PrefabInstance: {fileID: 3919822470329908515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753911691593287627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1779252708, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
