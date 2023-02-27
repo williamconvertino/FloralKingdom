@@ -106,12 +106,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8713388699529789807}
   - component: {fileID: 2753172876374486514}
-  - component: {fileID: 48342222234356148}
   - component: {fileID: 5867944267103492844}
   - component: {fileID: 359055709490726335}
   - component: {fileID: 4217661752523040923}
   - component: {fileID: 1948258139636313517}
   - component: {fileID: 9168076215547792659}
+  - component: {fileID: 9102704797179778047}
   m_Layer: 7
   m_Name: Entity
   m_TagString: Untagged
@@ -157,37 +157,9 @@ MonoBehaviour:
     RawGuidValue: faa24a42009f4854b695a77da0e1a13b
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 48342222234356148}
+  - {fileID: 0}
   - {fileID: 4217661752523040923}
   SimulationBehaviours: []
---- !u!114 &48342222234356148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5156239015245220337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
-  InterpolationSpace: 0
-  InterpolationTarget: {fileID: 8713388699529789807}
-  InterpolateErrorCorrection: 1
-  InterpolatedErrorCorrectionSettings:
-    MinRate: 3.3
-    MaxRate: 10
-    PosBlendStart: 0.25
-    PosBlendEnd: 1
-    PosMinCorrection: 0.025
-    PosTeleportDistance: 2
-    RotBlendStart: 0.1
-    RotBlendEnd: 0.5
-    RotTeleportRadians: 1.5
-  UseLegacySharedModeInterpolation: 0
-  TargetInterpolationDelay: 0.03
 --- !u!212 &5867944267103492844
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -352,6 +324,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &9102704797179778047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5156239015245220337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1779252708, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 0}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03
 --- !u!1 &6905063038376342697
 GameObject:
   m_ObjectHideFlags: 0

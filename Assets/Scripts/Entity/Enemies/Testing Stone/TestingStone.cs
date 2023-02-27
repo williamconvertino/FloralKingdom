@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -7,29 +8,26 @@ public class TestingStone : NetworkBehaviour
     public Transform Point2;
     public float Speed;
 
-    private Vector3 _direction;
-    private float _maxDistance;
-    private int _flip = 1;
-        
+    private Rigidbody2D _rb2d;
+    private Vector3 _targetPosition;
+    private Vector3 _nonTargetPosition;
+       
     private void Awake()
     {
-        _direction = Point1.position - Point2.position;
-        _maxDistance = Vector3.Distance(Point1.position, Point2.position);
-        _direction.Normalize();
+        _rb2d = GetComponent<Rigidbody2D>();
+        transform.position = Point1.position;
+        _targetPosition = Point2.position;
+        _nonTargetPosition = Point1.position;
     }
 
-    private void Move()
-    {
-        transform.position += _direction * Speed * Runner.DeltaTime * _flip;
-    }
-    
     public override void FixedUpdateNetwork()
     {
-        Move();
-        if (Vector3.Distance(Point1.position, transform.position) >= _maxDistance ||  Vector3.Distance(Point2.position, transform.position) >= _maxDistance)
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, _targetPosition, Speed * Runner.DeltaTime);
+        _rb2d.MovePosition(newPosition);
+        
+        if (Vector3.Distance(transform.position, _nonTargetPosition) >= Vector3.Distance(_nonTargetPosition, _targetPosition))
         {
-            _flip *= -1;
-            Move();
+            (_targetPosition, _nonTargetPosition) = (_nonTargetPosition, _targetPosition);
         }
     }
 }
