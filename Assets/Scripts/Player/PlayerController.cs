@@ -130,11 +130,11 @@ public class PlayerController : NetworkBehaviour
     }
     public void EndAction()
     {
-        playerState = PlayerState.None;
+        if (playerState == PlayerState.Action_Locked || playerState == PlayerState.Action_Unlocked) playerState = PlayerState.None;
     }
     public void EndActionLock()
     {
-        playerState = PlayerState.Action_Unlocked;
+        if (playerState == PlayerState.Action_Locked) playerState = PlayerState.Action_Unlocked;
     }
     
     #endregion

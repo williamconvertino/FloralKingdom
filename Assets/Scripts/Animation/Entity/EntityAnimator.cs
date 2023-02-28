@@ -57,18 +57,20 @@ public class EntityAnimator : NetworkBehaviour
 
     #endregion
     
-    #region Update animation
+    #region Update Animation
     private void Update()
     {
-        bool onAnimationEnd = _onAnimationEnd;
-        _onAnimationEnd = false;
-        if (onAnimationEnd && CurrentAnimationState.IsAction() && CurrentAnimationState == _queuedAnimationState)
+        if (_queuedAnimationState == EntityAnimationState.None) return;
+
+        if (CurrentAnimationState.IsAction() && CurrentAnimationState == _queuedAnimationState)
         {
             ForceAnimationPlayToggle = !ForceAnimationPlayToggle;
-            return;
         }
-        if (_queuedAnimationState == EntityAnimationState.None) return;
-        CurrentAnimationState = _queuedAnimationState;
+        else
+        {
+            CurrentAnimationState = _queuedAnimationState;
+        }
+        
         _queuedAnimationState = EntityAnimationState.None;
     }
     #endregion
@@ -77,7 +79,7 @@ public class EntityAnimator : NetworkBehaviour
     public void RunAnimator(EntityAnimationState animationState)
     {
         if (animationState == EntityAnimationState.None) return;
-        _animator.Play(animationState.ToString());
+        _animator.Play(animationState.ToString(), 0,0.0f);
     }
     #endregion
 }

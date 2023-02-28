@@ -15,7 +15,6 @@ public class ChristophController : PlayerController
     protected override void UpdateAction()
     {
         if (playerState == PlayerState.Action_Locked) return;
-        
         if (DoAttack)
         {
             playerState = PlayerState.Action_Locked;
