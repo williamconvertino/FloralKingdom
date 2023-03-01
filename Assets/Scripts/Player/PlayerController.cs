@@ -17,7 +17,7 @@ public class PlayerController : NetworkBehaviour
     protected Vector2 Direction;
     protected bool DoAttack;
 
-    public void Awake()
+    protected virtual void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         entityActionManager = GetComponent<EntityActionManager>();
@@ -136,7 +136,7 @@ public class PlayerController : NetworkBehaviour
     {
         if (playerState == PlayerState.Action_Locked) playerState = PlayerState.Action_Unlocked;
     }
-    
+
     #endregion
     
 }

@@ -14,7 +14,6 @@ public class EntityActionManager : MonoBehaviour
     private Dictionary<String, GameObject> _actionMap;
     private Dictionary<String, Action> _activeActions;
 
-    
     private void Awake()
     {
         _actionMap = _actions.ToDictionary(prefab => prefab.name);

@@ -11,6 +11,7 @@ public class EntityAnimator : NetworkBehaviour
 
     public UnityAnimationEvent OnAnimationComplete;
     public UnityAnimationEvent OnActionLockComplete;
+    public UnityAnimationEvent OnMoveLockComplete;
 
     private Animator _animator;
     private AnimationEventDispatcher _eventDispatcher;
@@ -26,6 +27,11 @@ public class EntityAnimator : NetworkBehaviour
     #region Animation Events
 
     public void TriggerActionLockComplete()
+    {
+        OnActionLockComplete.Invoke(_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+    }
+
+    public void TriggerMoveLockComplete()
     {
         OnActionLockComplete.Invoke(_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
     }

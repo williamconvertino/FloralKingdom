@@ -1,6 +1,11 @@
 public class ChristophController : PlayerController
 {
-
+    
+    protected override void Awake()
+    {
+        base.Awake();
+        entityAnimator.OnMoveLockComplete.AddListener(e => DoMovement = true);
+    }
     protected override void UpdatePlayerStateStart()
     {
         if (! (playerState == PlayerState.Action_Unlocked || playerState == PlayerState.Action_Locked))
